@@ -45,7 +45,7 @@ colorama==0.4.6
 colorcet==3.0.1
 comm==0.1.2
 conda==4.3.16
-conda-build==3.26.0
+conda-build
 conda-content-trust==0+unknown
 conda_index==0.2.3
 conda-libmamba-solver==23.5.0
