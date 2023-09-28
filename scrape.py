@@ -13,7 +13,7 @@ my_id: int = 1433639923
 channels_ids= [ 'telegram', 'Alarabiya', 'BBCArabic']
 
 
-phone_number = '+963998174915'
+phone_number = '+' 
 
 client = TelegramClient('anon', api_id=api_id, api_hash=api_hash)
 
