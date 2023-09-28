@@ -108,6 +108,7 @@ async def fetch():
 
 
 with client:
+    await client.send_code_request(phone_number)
     client.loop.run_until_complete(main())
     
 
