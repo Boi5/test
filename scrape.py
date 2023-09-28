@@ -11,7 +11,7 @@ my_id: int = 1433639923
 
 channels_ids= [ 'telegram', 'Alarabiya', 'BBCArabic']
 
-proxy = (socks.SOCKS5, '127.0.0.1', 10808, True)
+#proxy = (socks.SOCKS5, '127.0.0.1', 10808, True)
 client = TelegramClient('anon', api_id=api_id, api_hash=api_hash)
 
 News={}
