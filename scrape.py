@@ -13,7 +13,7 @@ channels_ids= [ 'telegram', 'Alarabiya', 'BBCArabic']
 
 
 proxy = (socks.HTTP, 'proxy.server', 3128 ,True,  'log', 'pass')
-client = TelegramClient('anon', api_id=api_id, api_hash=api_hash, proxy = proxy)
+client = TelegramClient('anon', api_id=api_id, api_hash=api_hash)
 
 News={}
 
