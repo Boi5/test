@@ -4,6 +4,7 @@ from telethon.network import ConnectionTcpFull
 import tweepy
 import socks
 
+
 api_id: int = 26017213
 api_hash: str = '9627de4b8f3172991251a1f5b8d09967'
 
@@ -11,7 +12,9 @@ my_id: int = 1433639923
 
 channels_ids= [ 'telegram', 'Alarabiya', 'BBCArabic']
 
-#proxy = (socks.SOCKS5, '127.0.0.1', 10808, True)
+proxy = (socks.SOCKS5, '127.0.0.1', 10808, True)
+phone_number = '+963998174915'
+
 client = TelegramClient('anon', api_id=api_id, api_hash=api_hash)
 
 News={}
@@ -88,6 +91,12 @@ async def get_messages():
     
 
 async def main():
+    #phone_number = 963998174915
+    #assert await client.connect()
+    #if not client.is_user_authorized():
+    #    await client.send_code_request(phone_number)
+    #    me = await client.sign_in(phone=phone_number)
+
     await fetch()  
 
 
@@ -98,7 +107,7 @@ def run():
 async def fetch():
     async with client:
         await client.start()
-
+        
         global message_list
         global index
         message_list = await get_messages()
@@ -107,8 +116,13 @@ async def fetch():
         #await client.forward_messages(my_id, News['solozeusbot'][0])
 
 
+
+def get_code():
+    code = "90225"
+    return code
+
+#client.start(phone=phone_number)
 with client:
-    await client.send_code_request("+963998174915")
     client.loop.run_until_complete(main())
     
 
