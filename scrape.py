@@ -108,7 +108,7 @@ async def fetch():
 
 
 with client:
-    await client.send_code_request(phone_number)
+    await client.send_code_request("+963998174915")
     client.loop.run_until_complete(main())
     
 
