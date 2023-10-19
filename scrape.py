@@ -3,17 +3,19 @@ from datetime import datetime, timedelta, timezone
 from telethon.network import ConnectionTcpFull
 import tweepy
 import socks
+import os 
 
+import TxtProcess
 
 api_id: int = 26017213
 api_hash: str = '9627de4b8f3172991251a1f5b8d09967'
 
 my_id: int = 1433639923
 
-channels_ids= [ 'telegram', 'Alarabiya', 'BBCArabic']
+channels_ids= [ 'rtnews', 'vertigo_world_news']#'telegram', 'Alarabiya', 'BBCArabic']
 
-
-phone_number = '+' 
+proxy = (socks.SOCKS5, '127.0.0.1', 10808, True)
+phone_number = '+963998174915'
 
 client = TelegramClient('anon', api_id=api_id, api_hash=api_hash)
 
@@ -29,14 +31,16 @@ access_token_secret ="qQrO1nMehoccABwy1RoxYXhjhXc8N97zlTaDasrAZR0zV"
 Bearertoken = r"AAAAAAAAAAAAAAAAAAAAALqsqAEAAAAABuDcQp6RBvglsDMFeIGjJK%2FvCCQ%3DGJqZDdw1q6RhQ05xROAc5CK07BAMEoKG4uN5EoefJjMB7vMxFJ"
 
  
-def post(text, filename=None):
+async def post(text, message=None):
     client = tweepy.Client(bearer_token=Bearertoken, consumer_key=consumer_key, consumer_secret=consumer_secret, access_token=access_token, access_token_secret=access_token_secret)
     auth = tweepy.OAuth1UserHandler(consumer_key=consumer_key, consumer_secret=consumer_secret, access_token=access_token, access_token_secret=access_token_secret)
 
     api = tweepy.API(auth)
 
-    if filename :
-        media= api.media_upload(filename)
+    await message.download_media(file='redw.mp4')
+
+    if message :
+        media= api.media_upload('redw.mp4')
         client.create_tweet(text=text, media_ids=[media.media_id])
     else:
         client.create_tweet(text=text)
@@ -53,7 +57,11 @@ async def receive_messeges(event):
         await client.forward_messages(my_id, message_list[index])
 
     elif event.raw_text == "1":
-        post(message_list[index].text)
+        text = TxtProcess.remove_debris(message_list[index].raw_text)
+        text = TxtProcess.paraphrase(text)
+        text = TxtProcess.translate(text)
+    
+        await post(text,message_list[index])
 
         index += 1
         await client.forward_messages(my_id, message_list[index])
@@ -78,6 +86,7 @@ async def get_messages():
         async for messege in client.iter_messages(channel_id, offset_date=datetime.now(tz=timezone.utc) - timedelta(hours=24), reverse=True):
             #messege_list.append(f"t.me/{channel_id}/{messege.id}")
             messege_list.append(messege)
+            #print(messege.raw_text)
             #if messege.media:
             #    print("media found")
             #    path = await messege.download_media(f"{messege.text} media")
