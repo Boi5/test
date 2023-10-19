@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 from telethon.network import ConnectionTcpFull
 import tweepy
 import socks
-import os 
+
 
 import TxtProcess
 
@@ -14,7 +14,7 @@ my_id: int = 1433639923
 
 channels_ids= [ 'rtnews', 'vertigo_world_news']#'telegram', 'Alarabiya', 'BBCArabic']
 
-proxy = (socks.SOCKS5, '127.0.0.1', 10808, True)
+
 phone_number = '+963998174915'
 
 client = TelegramClient('anon', api_id=api_id, api_hash=api_hash)
