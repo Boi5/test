@@ -15,8 +15,6 @@ my_id: int = 1433639923
 channels_ids= [ 'rtnews', 'vertigo_world_news']#'telegram', 'Alarabiya', 'BBCArabic']
 
 
-phone_number = '+963998174915'
-
 client = TelegramClient('anon', api_id=api_id, api_hash=api_hash)
 
 News={}
@@ -60,6 +58,7 @@ async def receive_messeges(event):
         text = TxtProcess.remove_debris(message_list[index].raw_text)
         text = TxtProcess.paraphrase(text)
         text = TxtProcess.translate(text)
+        text = TxtProcess.add_hashtags(text)
     
         await post(text,message_list[index])
 
