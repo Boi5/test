@@ -3,7 +3,8 @@ import json
 from googletrans import Translator #googletrans-4.0.0rc1
 
 url = "https://api.ai21.com/studio/v1/paraphrase"
-
+debris_list = ['/n', 'Subscribe to RT', '[ Categories / Add folder ]']
+hastags_list = ['سوريا', 'امريكا', 'اميركا', 'أميركا', 'روسيا', 'مصر', 'الأردن','لبنان', 'العراق', 'الصين', 'السعودية', 'اليمن', 'البحرين', 'المغرب', 'الجزائر', 'ليبيا', 'تونس', 'قطر', 'نتنياهو', 'بايدن', 'بوتين']
 
 def paraphrase(text) -> str:
     payload = {
@@ -26,8 +27,17 @@ def translate(text) -> str:
 
 def remove_debris(text) -> str:
     PText =str.replace(text, '/n', '.')
-    PText =str.replace(text, 'Subscribe to RT', '')
-    PText =str.replace(text, '[ Categories / Add folder ]', '')
+    for debrie in debris_list:
+        PText =str.replace(PText, debrie, '')
 
     return PText
+
+
+def add_hashtags(text):
+    PText =text
+    for hashtag in hastags_list:
+        PText = str.replace(PText, f"{hashtag}", f"#{hashtag}")
+
+    return PText
+
 
