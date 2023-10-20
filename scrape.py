@@ -35,9 +35,9 @@ async def post(text, message=None):
 
     api = tweepy.API(auth)
 
-    await message.download_media(file='redw.mp4')
-
-    if message :
+    if message.media != None :
+        await message.download_media(file='redw.mp4')
+        
         media= api.media_upload('redw.mp4')
         client.create_tweet(text=text, media_ids=[media.media_id])
     else:
@@ -59,7 +59,7 @@ async def receive_messeges(event):
         text = TxtProcess.paraphrase(text)
         text = TxtProcess.translate(text)
         text = TxtProcess.add_hashtags(text)
-    
+        
         await post(text,message_list[index])
 
         index += 1
@@ -74,7 +74,15 @@ async def receive_messeges(event):
         await client.disconnect()
 
     else :
-        post(event.raw_text)
+        if(str.find(event.raw_text,'-t')==0):
+            text = str.replace(event.raw_text,'-t', '')
+            text = TxtProcess.add_hashtags(text)
+
+            await post(text,message_list[index])
+            index += 1
+            await client.forward_messages(my_id, message_list[index])
+        else:
+            await client.send_message(my_id, "I Dont Get It ?")
 
 async def get_messages():
     #me = await client.get_me()
